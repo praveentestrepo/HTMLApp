@@ -35,3 +35,4 @@ copy this project, create the `HTMLApp` virtual directory, configure HTTP
 access, and test the site, see:
 
 - [Azure Windows VM and IIS deployment guide](docs/azure-windows-iis-deployment.md)
+- [Production HTTPS guide for IIS](docs/azure-windows-iis-https-production.md)

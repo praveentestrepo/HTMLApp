@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Salary CSV Filter",
+    "url": "tools/salary-filter.html",
+    "description": "Filter CSV rows where salary is greater than 1000.",
+    "category": "Tool"
+  },
+  {
+    "title": "Job Opening Builder",
+    "url": "tools/job-opening-builder.html",
+    "description": "Create job details and download them as a CSV.",
+    "category": "Tool"
+  },
+  {
+    "title": "GitHub Beginner Guide",
+    "url": "guides/github-beginners-guide.html",
+    "description": "Learn the basic GitHub concepts with interactive cards.",
+    "category": "Guide"
+  }
+]

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Basics</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d9e0ea;
+      --surface: #ffffff;
+      --background: #f4f7fb;
+      --accent: #2457d6;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 32px 16px;
+      color: var(--ink);
+      background: var(--background);
+      font-family: Arial, sans-serif;
+    }
+
+    main { width: min(900px, 100%); margin: 0 auto; }
+    header { margin-bottom: 26px; text-align: center; }
+    h1 { margin: 0 0 8px; font-size: clamp(2rem, 5vw, 3rem); }
+    header p { margin: 0; color: var(--muted); line-height: 1.5; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+      box-shadow: 0 5px 15px rgba(23, 32, 51, .05);
+      overflow: hidden;
+    }
+
+    .card-button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 20px;
+      border: 0;
+      color: var(--ink);
+      background: transparent;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .card-button:hover { background: #f5f7ff; }
+    .card-title { font-weight: 700; }
+    .card-number { color: var(--accent); font-weight: 700; }
+    .card-content {
+      display: none;
+      padding: 0 20px 20px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .card.open .card-content { display: block; }
+    .card-content p { margin: 0 0 12px; }
+    .card-content p:last-child { margin-bottom: 0; }
+    code {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 6px;
+      color: #183a9e;
+      background: #e9efff;
+      font-family: Consolas, monospace;
+      white-space: pre-wrap;
+    }
+
+    .tip {
+      margin-top: 20px;
+      padding: 16px;
+      border-left: 4px solid var(--accent);
+      color: var(--muted);
+      background: #e9efff;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 650px) {
+      .cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>GitHub Basics</h1>
+      <p>A quick, beginner-friendly introduction. Click a card to learn.</p>
+    </header>
+
+    <section class="cards" aria-label="GitHub beginner topics">
+      <article class="card">
+        <button class="card-button" type="button" aria-expanded="false">
+          <span><span class="card-number">01</span> &nbsp;Repository</span>
+          <span aria-hidden="true">+</span>
+        </button>
+        <div class="card-content">
+          <p>A repository, or repo, is a project folder stored on GitHub. It contains your code, files, and project history.</p>
+          <p>Think of it as an online home for your project.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <button class="card-button" type="button" aria-expanded="false">
+          <span><span class="card-number">02</span> &nbsp;Commit</span>
+          <span aria-hidden="true">+</span>
+        </button>
+        <div class="card-content">
+          <p>A commit is a saved snapshot of your changes. Add a short message so you know what changed.</p>
+          <code>git commit -m "Add homepage"</code>
+        </div>
+      </article>
+
+      <article class="card">
+        <button class="card-button" type="button" aria-expanded="false">
+          <span><span class="card-number">03</span> &nbsp;Branch</span>
+          <span aria-hidden="true">+</span>
+        </button>
+        <div class="card-content">
+          <p>A branch lets you work on a feature without changing the main project immediately.</p>
+          <code>git switch -c new-feature</code>
+        </div>
+      </article>
+
+      <article class="card">
+        <button class="card-button" type="button" aria-expanded="false">
+          <span><span class="card-number">04</span> &nbsp;Pull request</span>
+          <span aria-hidden="true">+</span>
+        </button>
+        <div class="card-content">
+          <p>A pull request asks your team to review your branch and merge it into the main branch.</p>
+          <p>It is a place for discussion, feedback, and approval.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <button class="card-button" type="button" aria-expanded="false">
+          <span><span class="card-number">05</span> &nbsp;Clone and push</span>
+          <span aria-hidden="true">+</span>
+        </button>
+        <div class="card-content">
+          <p>Clone downloads a repository to your computer. Push sends your local commits back to GitHub.</p>
+          <code>git clone &lt;repository-url&gt;
+git push</code>
+        </div>
+      </article>
+
+      <article class="card">
+        <button class="card-button" type="button" aria-expanded="false">
+          <span><span class="card-number">06</span> &nbsp;README</span>
+          <span aria-hidden="true">+</span>
+        </button>
+        <div class="card-content">
+          <p>A README explains what your project does and how someone can use it.</p>
+          <p>Start with the project name, purpose, setup steps, and examples.</p>
+        </div>
+      </article>
+    </section>
+
+    <div class="tip"><strong>Simple workflow:</strong> create a branch, make changes, commit them, push the branch, and open a pull request.</div>
+  </main>
+
+  <script>
+    document.querySelectorAll(".card-button").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var card = button.closest(".card");
+        var isOpen = card.classList.toggle("open");
+        button.setAttribute("aria-expanded", String(isOpen));
+        button.querySelector("[aria-hidden]").textContent = isOpen ? "−" : "+";
+      });
+    });
+  </script>
+</body>
+</html>

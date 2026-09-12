@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Opening Landing Page Builder</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d9e0ea;
+      --primary: #2457d6;
+      --primary-dark: #1740a8;
+      --surface: #ffffff;
+      --background: #f4f7fb;
+      --error: #b42318;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 32px 16px;
+      color: var(--ink);
+      background: var(--background);
+      font-family: Arial, sans-serif;
+    }
+
+    main { width: min(1100px, 100%); margin: 0 auto; }
+    h1 { margin: 0 0 8px; font-size: clamp(1.8rem, 4vw, 2.5rem); }
+    h2 { margin-top: 0; }
+    .intro { margin: 0 0 24px; color: var(--muted); line-height: 1.5; }
+    .card {
+      margin-bottom: 20px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: 0 6px 18px rgba(23, 32, 51, 0.06);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field { display: flex; flex-direction: column; gap: 7px; }
+    .field.full { grid-column: 1 / -1; }
+    label { font-weight: 700; }
+    input, textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid #b8c2d1;
+      border-radius: 7px;
+      color: var(--ink);
+      font: inherit;
+    }
+    textarea { min-height: 90px; resize: vertical; }
+    input:focus, textarea:focus { outline: 2px solid #b9c9ff; border-color: var(--primary); }
+    .hint { margin: 0; color: var(--muted); font-size: .88rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+    button {
+      padding: 11px 17px;
+      border: 0;
+      border-radius: 7px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    button:disabled { cursor: not-allowed; opacity: .5; }
+    #generate-button, #download-button { color: #fff; background: var(--primary); }
+    #generate-button:hover:not(:disabled), #download-button:hover:not(:disabled) { background: var(--primary-dark); }
+    #clear-button { color: var(--ink); background: #e9edf4; }
+    .status { min-height: 20px; margin: 14px 0 0; color: var(--error); }
+    .hidden { display: none; }
+
+    .preview-frame {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #f8faff;
+    }
+    .preview-hero {
+      padding: 42px 28px;
+      color: #fff;
+      background: linear-gradient(120deg, #183a9e, #3878df);
+    }
+    .preview-hero h3 { margin: 0 0 10px; font-size: clamp(1.7rem, 4vw, 2.5rem); }
+    .preview-hero p { margin: 0; font-size: 1.05rem; opacity: .9; }
+    .preview-body { padding: 26px 28px; }
+    .preview-body h4 { margin: 0 0 14px; font-size: 1.25rem; }
+    .details {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0 0 24px;
+    }
+    .detail { padding: 14px; border-radius: 8px; background: #e9efff; }
+    .detail strong { display: block; margin-bottom: 5px; color: #183a9e; font-size: .82rem; text-transform: uppercase; }
+    .detail span { white-space: pre-wrap; }
+    #preview-description { white-space: pre-wrap; line-height: 1.55; }
+
+    @media (max-width: 650px) {
+      .form-grid, .details { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Job opening landing page builder</h1>
+    <p class="intro">Answer the questions below to create a simple job-opening landing page. Everything stays in your browser.</p>
+
+    <section class="card">
+      <h2>Job details</h2>
+      <form id="job-form">
+        <div class="form-grid">
+          <div class="field">
+            <label for="job-title">Job title</label>
+            <input id="job-title" name="job-title" required placeholder="e.g. Senior Frontend Developer">
+          </div>
+          <div class="field">
+            <label for="company-name">Company name</label>
+            <input id="company-name" name="company-name" required placeholder="e.g. Acme Technologies">
+          </div>
+          <div class="field">
+            <label for="experience">Years of experience</label>
+            <input id="experience" name="experience" required placeholder="e.g. 3-5 years">
+          </div>
+          <div class="field">
+            <label for="last-company">Last company name</label>
+            <input id="last-company" name="last-company" placeholder="e.g. Previous employer">
+          </div>
+          <div class="field full">
+            <label for="tech-stack">Tech stack</label>
+            <input id="tech-stack" name="tech-stack" required placeholder="e.g. HTML, CSS, JavaScript, React">
+            <p class="hint">Separate technologies with commas.</p>
+          </div>
+          <div class="field">
+            <label for="salary">Salary expectation</label>
+            <input id="salary" name="salary" required placeholder="e.g. $80,000 - $100,000">
+          </div>
+          <div class="field">
+            <label for="location">Location / work mode</label>
+            <input id="location" name="location" placeholder="e.g. Remote or New York">
+          </div>
+          <div class="field full">
+            <label for="description">Short job description</label>
+            <textarea id="description" name="description" placeholder="Tell candidates about the opportunity..."></textarea>
+          </div>
+        </div>
+        <div class="actions">
+          <button id="generate-button" type="submit">Generate landing page</button>
+          <button id="clear-button" type="reset">Clear</button>
+        </div>
+        <p class="status" id="status" role="alert"></p>
+      </form>
+    </section>
+
+    <section class="card hidden" id="preview-section">
+      <h2>Landing page preview</h2>
+      <div class="preview-frame" id="preview">
+        <div class="preview-hero">
+          <h3 id="preview-title"></h3>
+          <p id="preview-company"></p>
+        </div>
+        <div class="preview-body">
+          <div class="details">
+            <div class="detail"><strong>Experience</strong><span id="preview-experience"></span></div>
+            <div class="detail"><strong>Previous company</strong><span id="preview-last-company"></span></div>
+            <div class="detail"><strong>Tech stack</strong><span id="preview-tech-stack"></span></div>
+            <div class="detail"><strong>Salary</strong><span id="preview-salary"></span></div>
+            <div class="detail"><strong>Location</strong><span id="preview-location"></span></div>
+          </div>
+          <h4>About the opportunity</h4>
+          <p id="preview-description"></p>
+        </div>
+      </div>
+      <div class="actions">
+        <button id="download-button" type="button">Download job details CSV</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var form = document.getElementById("job-form");
+      var status = document.getElementById("status");
+      var previewSection = document.getElementById("preview-section");
+      var downloadButton = document.getElementById("download-button");
+      var latestValues = null;
+
+      function valueOrDefault(value) {
+        return value.trim() || "Not specified";
+      }
+
+      function csvCell(value) {
+        var stringValue = String(value);
+        return /[",\r\n]/.test(stringValue)
+          ? '"' + stringValue.replace(/"/g, '""') + '"'
+          : stringValue;
+      }
+
+      function setText(id, value) {
+        document.getElementById(id).textContent = value;
+      }
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        var formData = new FormData(form);
+        latestValues = {
+          title: valueOrDefault(formData.get("job-title")),
+          company: valueOrDefault(formData.get("company-name")),
+          experience: valueOrDefault(formData.get("experience")),
+          lastCompany: valueOrDefault(formData.get("last-company")),
+          techStack: valueOrDefault(formData.get("tech-stack")),
+          salary: valueOrDefault(formData.get("salary")),
+          location: valueOrDefault(formData.get("location")),
+          description: valueOrDefault(formData.get("description"))
+        };
+
+        setText("preview-title", latestValues.title);
+        setText("preview-company", latestValues.company);
+        setText("preview-experience", latestValues.experience);
+        setText("preview-last-company", latestValues.lastCompany);
+        setText("preview-tech-stack", latestValues.techStack);
+        setText("preview-salary", latestValues.salary);
+        setText("preview-location", latestValues.location);
+        setText("preview-description", latestValues.description);
+        status.textContent = "";
+        previewSection.classList.remove("hidden");
+        previewSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      downloadButton.addEventListener("click", function () {
+        if (!latestValues) {
+          return;
+        }
+
+        var headers = ["Job Title", "Company Name", "Years of Experience", "Last Company Name",
+          "Tech Stack", "Salary Expectation", "Location / Work Mode", "Job Description"];
+        var values = [latestValues.title, latestValues.company, latestValues.experience,
+          latestValues.lastCompany, latestValues.techStack, latestValues.salary,
+          latestValues.location, latestValues.description];
+        var csv = headers.map(csvCell).join(",") + "\r\n" +
+          values.map(csvCell).join(",") + "\r\n";
+        var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement("a");
+        link.href = url;
+        link.download = latestValues.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") + "-job-opening.csv";
+        link.click();
+        URL.revokeObjectURL(url);
+      });
+
+      form.addEventListener("reset", function () {
+        latestValues = null;
+        previewSection.classList.add("hidden");
+        status.textContent = "";
+      });
+    }());
+  </script>
+</body>
+</html>
